@@ -55,26 +55,26 @@ int main()
       }
       else if (buf == 'Q' || buf == 'q') // 微弱前進
       {
-        pwm[0] = 2000;
-        pwm[1] = 2000;
-        pwm[2] = 2000;
-        pwm[3] = 2000;
+        pwm[0] = 4000;
+        pwm[1] = 4000;
+        pwm[2] = 4000;
+        pwm[3] = 4000;
         ThisThread::sleep_for(30ms);
       }
       else if (buf == 'E' || buf == 'e') // 微弱後進
       {
-        pwm[0] = -2000;
-        pwm[1] = -2000;
-        pwm[2] = -2000;
-        pwm[3] = -2000;
+        pwm[0] = -4000;
+        pwm[1] = -4000;
+        pwm[2] = -4000;
+        pwm[3] = -4000;
         ThisThread::sleep_for(30ms);
       }
       else if (buf == 'V' || buf == 'v') // Vだっしゅ！！
       {
-        pwm[0] = 12000;
-        pwm[1] = 12000;
-        pwm[2] = 12000;
-        pwm[3] = 12000;
+        pwm[0] = 15000;
+        pwm[1] = 15000;
+        pwm[2] = 15000;
+        pwm[3] = 15000;
         ThisThread::sleep_for(30ms);
       }
 
