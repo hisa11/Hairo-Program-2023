@@ -1,4 +1,4 @@
-#include "mbed.h"
+お#include "mbed.h"
 
 BufferedSerial pc(USBTX, USBRX, 2000000); // パソコンとのシリアル通信
 // pwm[0] = 0;         左前タイヤ
