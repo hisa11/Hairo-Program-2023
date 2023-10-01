@@ -1,0 +1,29 @@
+#include "mbed.h"
+
+DigitalIn encoderA(A0); // A相のピン A0からA5
+DigitalIn encoderB(A1); // B相のピン A0からA5
+int counter = 0;
+bool prevStateA = 0;
+bool prevStateB = 0;
+
+int main() {
+    while (1) {
+        bool stateA = encoderA.read();
+        bool stateB = encoderB.read();
+
+        if (stateA != prevStateA || stateB != prevStateB) {
+            if ((stateA && !stateB) || (!stateA && stateB)) {
+                // 正転または逆転の場合
+                counter++;
+            } else {
+                // 逆転または正転の場合
+                counter--;
+            }
+            printf("Counter: %d\n", counter);
+        }
+
+        prevStateA = stateA;
+        prevStateB = stateB;
+        wait_ns(10);
+    }
+}
