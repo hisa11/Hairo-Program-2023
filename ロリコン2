@@ -30,6 +30,6 @@ int main() {
         printf("Counter: %d\n", counter);
         prevStateA = stateA;
         prevStateB = stateB;
-        wait_ns(10); // wait_ns(10)では短すぎるかもしれません
+        wait_ns(10);
     }
 }
