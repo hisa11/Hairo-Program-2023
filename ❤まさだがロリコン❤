@@ -44,15 +44,6 @@ int main() {
                 counter--;
             }
         }
-        
-       // if (stateA != prevStateA || stateB != prevStateB) {
-       //     if (stateA != stateB) {
-       //         counter++;
-       //     } else {
-       //         counter--;
-       //     }            
-       //}
-        
         prevStateA = stateA;
         prevStateB = stateB;
         wait_ns(100);
