@@ -42,18 +42,9 @@ int main() {
             if (stateA == 1 && stateB == 1) {
                 counter--;
             }
-        }
-        
-       // if (stateA != prevStateA || stateB != prevStateB) {
-       //     if (stateA != stateB) {
-       //         counter++;
-       //     } else {
-       //         counter--;
-       //     }            
-       //}
-        
+        }  
         prevStateA = stateA;
         prevStateB = stateB;
         wait_ns(100);
     }
-}    
+} 
