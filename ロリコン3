@@ -4,7 +4,7 @@ DigitalIn encoderB(A1); // B相のピン A0からA5
 int counter = 0;
 bool prevStateA = 0;
 bool prevStateB = 0;
-
+BufferedSerial pc(USBTX, USBRX, 2000000); // パソコンとのシリアル通信
 int main() {
     while (1) {
         bool stateA = encoderA.read();
