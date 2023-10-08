@@ -1,0 +1,77 @@
+#include "mbed.h"
+
+BufferedSerial pc(USBTX, USBRX, 9600); // パソコンとのシリアル通信
+int16_t M_1 = 8000, M_2 = 8000, M_3 = 8000, M_4 = 8000;
+CAN can{PB_12, PB_13, (int)1e6}; // 12と13に送る
+int16_t pwm[4] = {M_1, M_2, M_3, M_4}; // pwm制御
+CANMessage msg;
+
+int main()
+{
+while (1)
+{
+if (pc.readable())
+{
+char buf;
+pc.read(&buf, sizeof(buf));
+if (buf == 'W' || buf == 'w')
+{
+M_1 = 8000; // 右
+M_2 = 8000; // 右
+M_3 = 8000; // 左
+M_4 = 8000; // 左
+}
+if (buf == 'Q' || buf == 'q')
+{
+M_1 = 2000; // 右
+M_2 = 2000; // 右
+M_3 = 2000; // 左
+M_4 = 2000; // 左
+}
+if (buf == 'V' || buf == 'v')
+{
+M_1 = 12000; // 右
+M_2 = 12000; // 右
+M_3 = 12000; // 左
+M_4 = 12000; // 左
+}
+if (buf == 'A' || buf == 'a')
+{
+M_1 = 2000;
+M_2 = 2000;
+M_3 = -2000;
+M_4 = -2000;
+}
+if (buf == 'S' || buf == 's')
+{
+M_1 = -8000;
+M_2 = -8000;
+M_3 = -8000;
+M_4 = -8000;
+}
+if (buf == 'E' || buf == 'e')
+{
+M_1 = -2000; // 右
+M_2 = -2000; // 右
+M_3 = -2000; // 左
+M_4 = -2000; // 左
+}
+if (buf == 'D' || buf == 'd')
+{
+M_1 = -2000;
+M_2 = -2000;
+M_3 = 2000;
+M_4 = 2000;
+}
+else
+{
+M_1 = 0;
+M_2 = 0;
+M_3 = 0;
+M_4 = 0;
+}
+CANMessage msg(5, reinterpret_cast<uint8_t *>(pwm), 8);
+can.write(msg);
+}
+}
+}
