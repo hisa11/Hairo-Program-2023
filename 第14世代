@@ -2,6 +2,8 @@
 
 DigitalIn encoderA(A0); // A相のピン A0からA5
 DigitalIn encoderB(A1); // B相のピン A0からA5
+PwmOut my_servo(D3);    // サーボ
+AnalogIn ain(A5);       // サーボ
 int counter = 0;
 bool prevStateA = 0;
 bool prevStateB = 0;
@@ -39,40 +41,7 @@ int main()
         bool stateA = encoderA.read();
         bool stateB = encoderB.read();
 
-        //ここからサーボ
-        if (buf == 'U') // 左
-            {
-                for (int i = 0; i < 200; i++)
-                {
-                    my_servo = i / 650.0;
-                    ThisThread::sleep_for(20ms);
-                }
-            }
-            if (buf == 'I') // 右
-            {
-                for (int i = 150; i > 0; i--)
-                {
-                    my_servo = i / 600.0;
-                    ThisThread::sleep_for(20ms);
-                }
-            }
-
-            if (buf == 'u') // 左
-            {
-                for (int i = 0; i < 200; i++)
-                {
-                    my_servo = i / 100.0;
-                    ThisThread::sleep_for(20ms);
-                }
-            }
-            if (buf == 'i') // 右
-            {
-                for (int i = 150; i > 0; i--)
-                {
-                    my_servo = i / 50.0;
-                    ThisThread::sleep_for(20ms);
-                }
-            }
+        // ここからサーボ
 
         if (prevStateA == 0 && prevStateB == 0)
         {
@@ -125,6 +94,40 @@ int main()
         if (pc.readable()) // 足回り
         {
             char buf;
+            if (buf == 'U') // 左
+            {
+                for (int i = 0; i < 200; i++)
+                {
+                    my_servo = i / 650.0;
+                    ThisThread::sleep_for(20ms);
+                }
+            }
+            if (buf == 'I') // 右
+            {
+                for (int i = 150; i > 0; i--)
+                {
+                    my_servo = i / 600.0;
+                    ThisThread::sleep_for(20ms);
+                }
+            }
+
+            if (buf == 'u') // 左
+            {
+                for (int i = 0; i < 200; i++)
+                {
+                    my_servo = i / 100.0;
+                    ThisThread::sleep_for(20ms);
+                }
+            }
+            if (buf == 'i') // 右
+            {
+                for (int i = 150; i > 0; i--)
+                {
+                    my_servo = i / 50.0;
+                    ThisThread::sleep_for(20ms);
+                }
+            }
+
             pc.read(&buf, sizeof(buf));
             if (buf == 'Q')
             {
