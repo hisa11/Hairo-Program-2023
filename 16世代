@@ -102,7 +102,7 @@ int main()
                     ThisThread::sleep_for(20ms);
                 }
             }
-            if (buf == 'I') // 右
+            else if (buf == 'I') // 右
             {
                 for (int i = 150; i > 0; i--)
                 {
@@ -111,7 +111,7 @@ int main()
                 }
             }
 
-            if (buf == 'u') // 左
+            else if (buf == 'u') // 左
             {
                 for (int i = 0; i < 200; i++)
                 {
@@ -119,7 +119,7 @@ int main()
                     ThisThread::sleep_for(20ms);
                 }
             }
-            if (buf == 'i') // 右
+            else if (buf == 'i') // 右
             {
                 for (int i = 150; i > 0; i--)
                 {
@@ -137,7 +137,7 @@ int main()
             {
                 kukki = 'b';
             }
-            if (buf == 'E')
+            else if (buf == 'E')
             {
                 tamago = 'a';
             }
@@ -146,7 +146,7 @@ int main()
                 tamago = 'b';
             }
 
-            if (buf == 'W' || buf == 'w') // 前進
+            else if (buf == 'W' || buf == 'w') // 前進
             {
                 if (kukki == 'a')
                 {
@@ -156,7 +156,7 @@ int main()
                     pwm0[3] = 16000;
                     pwm1[3] = 13000;
                 }
-                if (kukki == 'b')
+                else if (kukki == 'b')
                 {
                     pwm0[0] = -16000;
                     pwm0[1] = -16000;
@@ -175,7 +175,7 @@ int main()
                     pwm0[3] = -16000;
                     pwm1[3] = -13000;
                 }
-                if (kukki == 'b')
+                else if (kukki == 'b')
                 {
                     pwm0[0] = 16000;
                     pwm0[1] = 16000;
@@ -193,7 +193,7 @@ int main()
                     pwm0[2] = -12000;
                     pwm0[3] = -12000;
                 }
-                if (kukki == 'b')
+                else if (kukki == 'b')
                 {
                     pwm0[0] = -12000;
                     pwm0[1] = -12000;
@@ -210,7 +210,7 @@ int main()
                     pwm0[2] = 12000;
                     pwm0[3] = 12000;
                 }
-                if (kukki == 'b')
+                else if (kukki == 'b')
                 {
                     pwm0[0] = 12000;
                     pwm0[1] = 12000;
@@ -228,7 +228,7 @@ int main()
                     pwm0[3] = 8000;
                     pwm1[3] = 6500;
                 }
-                if (kukki == 'b')
+                else if (kukki == 'b')
                 {
                     pwm0[0] = -8000;
                     pwm0[1] = -8000;
@@ -247,7 +247,7 @@ int main()
                     pwm0[3] = -8000;
                     pwm1[3] = -6500;
                 }
-                if (kukki == 'b')
+                else if (kukki == 'b')
                 {
                     pwm0[0] = 8000;
                     pwm0[1] = 8000;
@@ -266,7 +266,7 @@ int main()
                     pwm0[3] = 27500;
                     pwm1[3] = 18000;
                 }
-                if (kukki == 'b')
+                else if (kukki == 'b')
                 {
                     pwm0[0] = -27500;
                     pwm0[1] = -27500;
@@ -308,20 +308,20 @@ int main()
             {
                 pwm1[0] = 4000;
             }
-            else if (buf == 'U') // ドラム手動　出す
+            else if (buf == 'Y') // ドラム手動　出す
             {
                 pwm1[3] = 10000;
             }
-            else if (buf == 'J')
+            else if (buf == 'H')
             {
                 pwm1[3] = -10000; // ドラム手動　巻き取る
             }
-            else if (buf == 'M')
+            else if (buf == 'N')
             {
                 pwm1[3] = 0; // ドラム手動　停止
             }
 
-            if (buf == 'O')
+            else if (buf == 'O')
             {
                 dorayaki = 'a';
             }
@@ -329,19 +329,19 @@ int main()
             {
                 dorayaki = 'b';
             }
-            else if (buf == 'k')
+            else if (buf == 'K')
             {
                 gohan = 'b';
             }
-            else if (buf == 'N')
+            else if (buf == 'B')
             {
                 tyuusyoku = 'b';
             }
-            else if (buf == 'B')
+            else if (buf == 'V')
             {
                 tyuusyoku = 'a';
             }
-            if (buf == 'y')
+            else if (buf == 'y')
             {
                 bekon = 'b';
             }
@@ -356,28 +356,28 @@ int main()
 
             // ThisThread::sleep_for(1000ms);
         }
-        if (kukki == 'b')
+        else if (kukki == 'b')
         {
             pwm0[0] = 0;
             pwm0[1] = 0;
             pwm0[2] = 0;
             pwm0[3] = 0;
         }
-        if (tamago == 'b')
+        else if (tamago == 'b')
         {
             pwm2[0] = 0;
             pwm2[1] = 0;
         }
-        if (button1.read() == 0)
+        else if (button1.read() == 0)
         {
             koppepan = 'a';
         }
-        if (button2.read() == 0)
+        else if (button2.read() == 0)
         {
             koppepan = 'b';
         }
 
-        if (dorayaki == 'a') // 安全装置
+        else if (dorayaki == 'a') // 安全装置
         {
             if (counter <= -3100)
             {
@@ -385,12 +385,12 @@ int main()
             }
         }
 
-        if (gohan == 'b')
+        else if (gohan == 'b')
         {
             counter = 0;
             gohan = 'a';
         }
-        if (tyuusyoku == 'b')
+        else if (tyuusyoku == 'b')
         {
             if (counter > 0) // 安全装置
             {
@@ -398,14 +398,14 @@ int main()
             }
         }
         // もしbekonがaならラックアンドピニオンをとめる。bなら動かす。
-        if (bekon == 'b')
+        else if (bekon == 'b')
         {
             if (koppepan == 'a')
             {
                 pwm1[1] = 8000;
                 pwm1[2] = 6000;
             }
-            if (koppepan == 'b')
+            else if (koppepan == 'b')
             {
                 pwm1[1] = -8000;
                 pwm1[2] = 6000;
