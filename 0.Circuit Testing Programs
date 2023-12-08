@@ -9,7 +9,6 @@ int16_t pwm0[4] = {0, 0, 0, 0}; // モタドラ1
 int16_t pwm1[4] = {0, 0, 0, 0}; // モダドラ2
 int16_t pwm2[4] = {0, 0, 0, 0}; // モダドラ3
 
-
 int botan1 = 0;
 int botan2 = 0;
 int botan3 = 0;
@@ -43,10 +42,12 @@ int main()
         {
             botan = 'a';
         }
-        else if (buf == 'c'){
+        else if (buf == 'c')
+        {
             Can = 'b';
         }
-        else if(buf == 'v'){
+        else if (buf == 'v')
+        {
             Can = 'a';
         }
 
@@ -57,7 +58,8 @@ int main()
             printf("botan3: %d\n", botan3);
             printf("botan4: %d\n", botan4);
         }
-        if(botan == 'b'){
+        if (botan == 'b')
+        {
             pwm0[0] = 0;
             pwm0[1] = 0;
             pwm0[2] = 0;
@@ -70,7 +72,28 @@ int main()
             pwm2[1] = 0;
             pwm2[2] = 0;
             pwm2[3] = 0;
+        }
 
+        CANMessage msg0(1, (const uint8_t *)pwm0, 8);
+        CANMessage msg1(2, (const uint8_t *)pwm1, 8);
+        CANMessage msg2(5, (const uint8_t *)pwm2, 8);
+        int res0 = can.write(msg0);
+        int res1 = can.write(msg1);
+        int res2 = can.write(msg2);
+
+        if (!res0)
+        {
+            printf("fail\n");
+        }
+
+        if (!res1)
+        {
+            printf("fail\n");
+        }
+
+        if (!res2)
+        {
+            printf("fail\n");
         }
 
         ThisThread::sleep_for(1000ms);
