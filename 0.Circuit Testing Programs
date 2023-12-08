@@ -1,0 +1,78 @@
+#include "mbed.h"
+DigitalIn button1(D4); // 塗機構スイッチ1
+DigitalIn button2(D5); // 塗機構スイッチ2
+DigitalIn button3(D6); // 塗機構スイッチ2
+DigitalIn button4(D7); // 塗機構スイッチ2
+CANMessage msg;
+CAN can(PA_11, PA_12, (int)1e6);
+int16_t pwm0[4] = {0, 0, 0, 0}; // モタドラ1
+int16_t pwm1[4] = {0, 0, 0, 0}; // モダドラ2
+int16_t pwm2[4] = {0, 0, 0, 0}; // モダドラ3
+
+
+int botan1 = 0;
+int botan2 = 0;
+int botan3 = 0;
+int botan4 = 0;
+
+int botan = 'a';
+int Can = 'a';
+
+BufferedSerial pc(USBTX, USBRX, 250000); // パソコンとのシリアル通信
+
+int main()
+{
+    button1.mode(PullUp);
+    button2.mode(PullUp);
+    button3.mode(PullUp);
+    button4.mode(PullUp);
+    while (1)
+    {
+        char buf;
+        pc.read(&buf, sizeof(buf));
+        botan1 = button1.read();
+        botan2 = button2.read();
+        botan3 = button3.read();
+        botan4 = button4.read();
+
+        if (buf == 'b')
+        {
+            botan = 'b';
+        }
+        else if (buf == 'n')
+        {
+            botan = 'a';
+        }
+        else if (buf == 'c'){
+            Can = 'b';
+        }
+        else if(buf == 'v'){
+            Can = 'a';
+        }
+
+        if (botan == 'b')
+        {
+            printf("botan1: %d\n", botan1);
+            printf("botan2: %d\n", botan2);
+            printf("botan3: %d\n", botan3);
+            printf("botan4: %d\n", botan4);
+        }
+        if(botan == 'b'){
+            pwm0[0] = 0;
+            pwm0[1] = 0;
+            pwm0[2] = 0;
+            pwm0[3] = 0;
+            pwm1[0] = 0;
+            pwm1[1] = 0;
+            pwm1[2] = 0;
+            pwm1[3] = 0;
+            pwm2[0] = 0;
+            pwm2[1] = 0;
+            pwm2[2] = 0;
+            pwm2[3] = 0;
+
+        }
+
+        ThisThread::sleep_for(1000ms);
+    }
+}
