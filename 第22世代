@@ -98,7 +98,7 @@ int main()
         prevStateA = stateA;
         prevStateB = stateB;
         wait_ns(100); // ロリコンここまで
-        
+
         if (pc.readable()) // 足回り
         {
             char buf;
@@ -136,7 +136,6 @@ int main()
                     ThisThread::sleep_for(1ms);
                 }
             }
-
 
             if (buf == 'Q')
             {
@@ -255,7 +254,8 @@ int main()
                     {
                         pwm1[3] = 7000;
                     }
-                    else{
+                    else
+                    {
                         pwm1[3] = 0;
                     }
                 }
@@ -473,10 +473,9 @@ int main()
         can.write(msg0);
         can.write(msg1);
         can.write(msg2);
-        if (sirial == 'b')
-        {
-            printf("counter: %d\n", counter);
-        }
+
+        printf("counter: %d\n", counter);
+
         ThisThread::sleep_for(20ms);
     }
 }
