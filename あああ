@@ -1,0 +1,38 @@
+#include "mbed.h"
+
+DigitalIn encoderA(A0); // A相のピン A0からA5
+DigitalIn encoderB(A1); // B相のピン A0からA5
+PwmOut my_servo(D3);    // サーボ
+AnalogIn ain(A5);       // サーボ
+int counter = 0;
+int counter_r = 0;
+bool prevStateA = 0;
+bool prevStateB = 0;
+
+BufferedSerial pc(USBTX, USBRX, 250000); // パソコンとのシリアル通信
+CANMessage msg;
+CAN can(PA_11, PA_12, (int)1e6);
+
+#include <iostream>
+
+constexpr uint32_t servo_can_id = 149;
+uint8_t servo[1] = {};
+
+int main()
+{
+    while (1)
+    {
+
+        servo[3] = 190; // 180°
+
+        auto msg = CANMessage{servo_can_id, servo, sizeof(servo)};
+        can.write(msg);
+        int res0 = can.write(msg);
+        ThisThread::sleep_for(100ms);
+
+        if (!res0)
+        {
+            printf("fail\n");
+        }
+    }
+}
