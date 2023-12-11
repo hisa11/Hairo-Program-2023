@@ -1,7 +1,7 @@
 #include "mbed.h"
 
-DigitalIn encoderA(A0); // A相のピン A0からA5
-DigitalIn encoderB(A1); // B相のピン A0からA5
+DigitalIn encoderA(PB_13); // A相のピン A0からA5
+DigitalIn encoderB(PB_14); // B相のピン A0からA5
 PwmOut my_servo(D3);    // サーボ
 AnalogIn ain(A5);       // サーボ
 int counter = 0;
@@ -32,7 +32,7 @@ int16_t tamago = 'a'; // クローラー動作の有無
 int16_t sirial = 'a'; // シリアル通信によるカウンターのオンオフ切り替え
 
 DigitalIn button1(D4); // 塗機構スイッチ1
-DigitalIn button2(D5); // 塗機構スイッチ2
+DigitalIn button2(D2); // 塗機構スイッチ2
 DigitalIn button3(D6); // 塗機構スイッチ2
 DigitalIn button4(D7); // 塗機構スイッチ2
 
@@ -405,8 +405,9 @@ int main()
         {
             suitti = 'a';
             r_seigyo = 'b';
-            counter_r = counter;
+            counter_r = counter + 10;
         }
+        
         if (button2.read() == 0)
         {
             suitti = 'b';
@@ -438,14 +439,13 @@ int main()
         {
             pwm1[0] = -4000;
         }
-        if (r_seigyo == 'b')
+        if (r_seigyo == 'b' && counter_r <= counter )
         {
-            if (counter == counter_r + 90)
-            {
-                pwm1[0] = 0;
-                r_seigyo = 'a';
-            }
+            pwm1[0] = 0;
+            r_seigyo = 'a';
+            
         }
+
         // もしnurikikouがaならラックアンドピニオンをとめる。bなら動かす。
         if (nurikikou == 'b')
         {
