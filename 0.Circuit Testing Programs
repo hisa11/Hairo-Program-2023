@@ -95,7 +95,5 @@ int main()
         {
             printf("fail\n");
         }
-
-        ThisThread::sleep_for(1000ms);
     }
 }
