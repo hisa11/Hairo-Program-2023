@@ -95,5 +95,9 @@ int main()
         {
             printf("fail\n");
         }
+        if (res0 && res1 && res2)
+        {
+            printf("CAN問題なし");
+        }
     }
 }
