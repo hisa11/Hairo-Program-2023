@@ -1,8 +1,8 @@
 #include "mbed.h"
 DigitalIn button1(D4); // 塗機構スイッチ1
-DigitalIn button2(D5); // 塗機構スイッチ2
-DigitalIn button3(D6); // 塗機構スイッチ2
-DigitalIn button4(D7); // 塗機構スイッチ2
+DigitalIn button2(D2); // 塗機構スイッチ2
+DigitalIn button3(PC_10); // 塗機構スイッチ2
+DigitalIn button4(PC_12); // 塗機構スイッチ2
 CANMessage msg;
 CAN can(PA_11, PA_12, (int)1e6);
 int16_t pwm0[4] = {0, 0, 0, 0}; // モタドラ1
