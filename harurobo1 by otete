@@ -1,0 +1,102 @@
+#include "mbed.h"
+
+DigitalIn encoderA(PB_13);
+DigitalIn encoderB(PB_14);
+bool prevStateA = 0;
+bool prevStateB = 0;
+int counter = 0;
+
+BufferedSerial pc(USBTX, USBRX, 250000);
+CANMessage msg;
+CAN can1(PA_11, PA_12, (int)1e6);
+CAN can2(PB_12, PB_13, (int)1e6);
+int16_t pwm0[0] = {};
+int16_t pwm1[0] = {};
+int16_t pwm2[0] = {};
+int16_t pwm3[0] = {};
+
+DigitalIn button1(D4); 
+DigitalIn button2(D2); 
+
+int main(){
+    while (1)
+    {
+        bool stateA = encoderA.read();
+        bool stateB = encoderB.read();
+
+        if (prevStateA == 0 && prevStateB == 0)
+        {
+            if (stateA == 1 && stateB == 0)
+            {
+                counter++;
+            }
+            if (stateA == 0 && stateB == 1)
+            {
+                counter--;
+            }
+        }
+        if (prevStateA == 1 && prevStateB == 0)
+        {
+            if (stateA == 1 && stateB == 1)
+            {
+                counter++;
+            }
+            if (stateA == 0 && stateB == 0)
+            {
+                counter--;
+            }
+        }
+        if (prevStateA == 1 && prevStateB == 1)
+        {
+            if (stateA == 0 && stateB == 1)
+            {
+                counter++;
+            }
+            if (stateA == 1 && stateB == 0)
+            {
+                counter--;
+            }
+        }
+        if (prevStateA == 0 && prevStateB == 1)
+        {
+            if (stateA == 0 && stateB == 0)
+            {
+                counter++;
+            }
+            if (stateA == 1 && stateB == 1)
+            {
+                counter--;
+            }
+        }
+        prevStateA = stateA;
+        prevStateB = stateB;
+        wait_ns(100);
+
+        if (pc.readable())
+        {
+            char buf;
+            pc.read(&buf, sizeof(buf));
+            if (buf == 'a')
+            {
+                pwm0[0] = 1000; 
+            }
+            if (buf == 'b')
+            {
+                pwm0[0] = -1000;
+            }
+
+        button1.mode(PullUp);
+        button2.mode(PullUp);
+        pwm0[0] = 1000;
+    
+        if (button1.read() == 0)
+        {
+            pwm0[0] = 1000;
+        }
+        else if(button2.read() == 0)
+        {
+                   pwm0[0] = -1000;
+        }   
+        }
+    }
+}
