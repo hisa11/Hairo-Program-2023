@@ -1,0 +1,164 @@
+#include <mbed.h>
+constexpr uint32_t can_id = 35;
+BufferedSerial pc{USBTX, USBRX, 115200};
+// CAN can{PA_11, PA_12, (int)1e6};
+CAN can{PB_12, PB_13, (int)1e6};
+CANMessage msg;
+Timer timer;
+
+DigitalIn encoderA(PB_13);
+DigitalIn encoderB(PB_14);
+bool prevStateA = 0;
+bool prevStateB = 0;
+int counter = 0;
+DigitalIn button1(D4); 
+DigitalIn button2(D2); 
+
+struct FirstPenguin
+{
+  static constexpr int max = INT16_MAX;
+  uint32_t send_id;
+  int16_t pwm[4] = {};
+  struct
+  {
+    int32_t enc;
+    uint32_t adc;
+    void set(const uint8_t data[8])
+    {
+      memcpy(this, data, sizeof(*this));
+    }
+  } receive[4] = {};
+  void read(const CANMessage &msg)
+  {
+    if (msg.format == CANStandard && msg.type == CANData && msg.len == sizeof(receive[0]) && send_id < msg.id &&
+        msg.id <= send_id + 5)
+    {
+      receive[msg.id - send_id - 1].set(msg.data);
+    }
+  }
+  bool send()
+  {
+    return can.write(CANMessage{send_id, reinterpret_cast<const uint8_t *>(pwm), 8});
+  }
+};
+FirstPenguin penguin{can_id};
+int main()
+{
+  printf("\nsetup\n");
+  timer.start();
+  auto pre = timer.elapsed_time();
+  while (1)
+  {
+    auto now = timer.elapsed_time();
+    if (can.read(msg))
+    {
+      penguin.read(msg);
+    }
+    if (now - pre > 20ms)
+    {
+      for (auto e : penguin.receive)
+        printf("% 5ld\t", e.enc);
+      for (auto e : penguin.receive)
+        printf("% 5ld\t", e.adc);
+      printf("\n");
+      for (auto &e : penguin.pwm)
+        e = penguin.max / 4;
+    penguin.pwm[3] = 16000;
+    penguin.pwm[1] = 16000;
+    penguin.pwm[2] = 16000;
+    penguin.pwm[0] = 16000;
+      penguin.send();
+      pre = now;
+    
+    bool stateA = encoderA.read();
+    bool stateB = encoderB.read();
+
+        if (prevStateA == 0 && prevStateB == 0)
+        {
+            if (stateA == 1 && stateB == 0)
+            {
+                counter++;
+            }
+            if (stateA == 0 && stateB == 1)
+            {
+                counter--;
+            }
+        }
+        if (prevStateA == 1 && prevStateB == 0)
+        {
+            if (stateA == 1 && stateB == 1)
+            {
+                counter++;
+            }
+            if (stateA == 0 && stateB == 0)
+            {
+                counter--;
+            }
+        }
+        if (prevStateA == 1 && prevStateB == 1)
+        {
+            if (stateA == 0 && stateB == 1)
+            {
+                counter++;
+            }
+            if (stateA == 1 && stateB == 0)
+            {
+                counter--;
+            }
+        }
+        if (prevStateA == 0 && prevStateB == 1)
+        {
+            if (stateA == 0 && stateB == 0)
+            {
+                counter++;
+            }
+            if (stateA == 1 && stateB == 1)
+            {
+                counter--;
+            }
+        }
+        prevStateA = stateA;
+        prevStateB = stateB;
+        wait_ns(100);
+
+        if (pc.readable())
+        {
+            char buf;
+            pc.read(&buf, sizeof(buf));
+            if (buf == 'a')
+            {
+                penguin.pwm[0] = 1000; 
+            }
+            if (buf == 'b')
+            {
+                penguin.pwm[0] = -1000;
+            }
+            if (buf == 'c')
+            {
+                penguin.pwm[1] = 1000;
+            }
+            if (buf == 'd')
+            {
+                penguin.pwm[1] = -1000;
+            }
+
+        button1.mode(PullUp);
+        button2.mode(PullUp);
+        penguin.pwm[2] = 1000;
+    
+        if (button1.read() == 0)
+        {
+            penguin.pwm[2] = 1000;
+        }
+        else if(button2.read() == 0)
+        {
+            penguin.pwm[2] = -1000;
+        }
+                
+                
+        }
+
+
+    }
+  }
+}
