@@ -3,8 +3,12 @@
 #include <WiFiAP.h>
 #include <WiFiUdp.h>
 
+#include <WebServer.h>
+
 const char *ssid = "GL-SFT1200-19f";
 const char *password = "goodlife";
+
+WebServer server(80);
 
 WiFiUDP udp;
 
@@ -12,13 +16,22 @@ void setup() {
   Serial.begin(115200);
   WiFi.begin(ssid, password);
 
+  WiFi.mode(WIFI_STA);
+  Serial.println("つないでるぜ");
+
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.println("Connecting to WiFi...");
+    if (WiFi.status() == WL_CONNECT_FAILED) {
+      Serial.println("つながらないぜ");
+    }
   }
 
-  Serial.println("Connected to WiFi");
+  Serial.println("つながったぜ");
   udp.begin(1234); // Port to listen on
+  Serial.println(WiFi.localIP());
+
+  server.begin();
 }
 
 void loop() {
@@ -29,4 +42,6 @@ void loop() {
     incomingPacket[packetSize] = '\0';
     Serial.printf("Received %d bytes: %s\n", packetSize, incomingPacket);
   }
+
+  server.handleClient();
 }
