@@ -1,0 +1,32 @@
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <WiFiAP.h>
+#include <WiFiUdp.h>
+
+const char *ssid = "GL-SFT1200-19f";
+const char *password = "goodlife";
+
+WiFiUDP udp;
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+
+  Serial.println("Connected to WiFi");
+  udp.begin(1234); // Port to listen on
+}
+
+void loop() {
+  int packetSize = udp.parsePacket();
+  if (packetSize) {
+    char incomingPacket[255];
+    udp.read(incomingPacket, packetSize);
+    incomingPacket[packetSize] = '\0';
+    Serial.printf("Received %d bytes: %s\n", packetSize, incomingPacket);
+  }
+}
