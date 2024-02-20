@@ -1,0 +1,32 @@
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <WiFiAP.h>
+#include <WiFiUdp.h>
+
+const char *ssid = "GL-SFT1200-19f";
+const char *password = "goodlife";
+
+WiFiUDP udp;
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+
+  Serial.println("Connected to WiFi");
+}
+
+void loop() {
+  static int count = 0;
+  char buffer[255];
+  sprintf(buffer, "Message %d from ESP32", count++);
+  udp.beginPacket(IPAddress(192, 168, 1, 100), 1234); // IP address and port of the receiver ESP32
+  udp.print(buffer);
+  udp.endPacket();
+  Serial.println("Message sent");
+  delay(2000);
+}
