@@ -1,0 +1,157 @@
+//送信側のプログラム//右ボタンを押そう！！！！！！
+#include <HardwareSerial.h>
+#include <PS4Controller.h>
+
+HardwareSerial SerialPort(2);  // use UART2
+
+void setup() {
+  SerialPort.begin(15200, SERIAL_8N1, 16, 17);
+  Serial.begin(115200);
+  PS4.begin("70:b8:f6:5c:80:16");  //70:b8:f6:5c:80:16
+  Serial.println("Ready.");
+}
+
+
+
+
+void loop() {
+
+
+
+
+  if (PS4.Right()) {
+    SerialPort.print("RIGHT");
+    SerialPort.print("\n");
+    Serial.print("RIGHT");
+  }
+  if (PS4.Left()) {
+    SerialPort.print("LEFT");
+    SerialPort.print("\n");
+    Serial.print("LEFT");
+  }
+  if (PS4.Up()) {
+    SerialPort.print("UP");
+    SerialPort.print("\n");
+    Serial.print("UP");
+  }
+  if (PS4.Down()) {
+    SerialPort.print("DOWN");
+    SerialPort.print("\n");
+    Serial.print("DOWN");
+  }
+
+  if (PS4.UpRight()) {
+    SerialPort.print("UPRIGHT");
+    SerialPort.print("\n");
+    Serial.print("UPRIGHT");
+  }
+  if (PS4.UpLeft()) {
+    SerialPort.print("UPLEFT");
+    SerialPort.print("\n");
+    Serial.print("UPLEFT");
+  }
+  if (PS4.DownLeft()) {
+    SerialPort.print("DOWNLEFT");
+    SerialPort.print("\n");
+    Serial.print("DOWNLEFT");
+  }
+  if (PS4.DownRight()) {
+    SerialPort.print("DOWNRIGHT");
+    SerialPort.print("\n");
+    Serial.print("DOWNRIGHT");
+  }
+
+
+
+  if (PS4.Square()) {
+    SerialPort.print("SQUARE");
+    SerialPort.print("\n");
+    Serial.print("SQUARE");
+  }
+  if (PS4.Cross()) {
+    SerialPort.print("CROSS");
+    SerialPort.print("\n");
+    Serial.print("CROSS");
+  }
+  if (PS4.Circle()) {
+    SerialPort.print("CIRCLE");
+    SerialPort.print("\n");
+    Serial.print("CIRCLE");
+  }
+  if (PS4.Triangle()) {
+    SerialPort.print("TRIANGLE");
+    SerialPort.print("\n");
+    Serial.print("TRIANGLE");
+  }
+
+
+  if (PS4.L1()) {
+    SerialPort.print("L1");
+    SerialPort.print("\n");
+    Serial.print("L1");
+  }
+  if (PS4.R1()) {
+    SerialPort.print("R1");
+    SerialPort.print("\n");
+    Serial.print("R1");
+  }
+  if (PS4.Share()) {
+    SerialPort.print("SHARE");
+    SerialPort.print("\n");
+    Serial.print("SHARE");
+  }
+  if (PS4.Options()) {
+    SerialPort.print("OPTIONS");
+    SerialPort.print("\n");
+    Serial.print("OPTIONS");
+  }
+
+  if (PS4.L3()) {
+    SerialPort.print("L3");
+    SerialPort.print("\n");
+    Serial.print("L3");
+  }
+  if (PS4.R3()) {
+    SerialPort.print("R3");
+    SerialPort.print("\n");
+    Serial.print("R3");
+  }
+  if (PS4.PSButton()) {
+    SerialPort.print("PS");
+    SerialPort.print("\n");
+    Serial.print("PS");
+  }
+  if (PS4.Touchpad()) {
+    SerialPort.print("TOUCHPAD");
+    SerialPort.print("\n");
+    Serial.print("TOUCHPAD");
+  }
+
+
+  if (PS4.LStickX()) {
+    SerialPort.print("Leftx");
+    SerialPort.print(PS4.LStickX());
+    SerialPort.print("\n");
+    Serial.printf("Left Stick x at %d\n", PS4.LStickX());
+    // }
+    // if (PS4.LStickY()) {
+    //   SerialPort.print("Lefty%d\n", PS4.LStickY());
+    //   SerialPort.print("\n");
+    //   Serial.printf("Left Stick y at %d\n", PS4.LStickY());
+    // }
+    // if (PS4.RStickX()) {
+    //   SerialPort.print("Rightx%d\n", PS4.RStickX());
+    //   SerialPort.print("\n");
+    //   Serial.printf("Right Stick x at %d\n", PS4.RStickX());
+    // }
+    // if (PS4.RStickY()) {
+    //   SerialPort.print("Righty%d\n", PS4.RStickY());
+    //   SerialPort.print("\n");
+    //   Serial.printf("Right Stick y at %d\n", PS4.RStickY());
+    // }
+  }
+
+
+  Serial.print("\n");
+  delay(5);
+}
