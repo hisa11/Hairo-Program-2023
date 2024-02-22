@@ -1,0 +1,29 @@
+//送信側のプログラム//右ボタンを押そう！！！！！！
+#include <HardwareSerial.h>
+#include <PS4Controller.h>
+
+HardwareSerial SerialPort(2);  // use UART2
+
+void setup() {
+  SerialPort.begin(15200, SERIAL_8N1, 16, 17);
+  Serial.begin(115200);
+  PS4.begin("70:b8:f6:5c:80:16");
+  Serial.println("Ready.");
+}
+
+
+
+
+void loop() {
+  if (PS4.Right()) {
+    SerialPort.print(0);
+    Serial.print(0);
+    Serial.print("\n");
+
+  } else {
+    SerialPort.print(1);
+    Serial.print(1);
+    Serial.print("\n");
+  }
+  delay(5);
+}
