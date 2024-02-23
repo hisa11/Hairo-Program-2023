@@ -1,0 +1,42 @@
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <WiFiAP.h>
+#include <WiFiUdp.h>
+#include <HardwareSerial.h>
+
+HardwareSerial SerialPort(2);
+
+const char *ssid = "GL-SFT1200-19f";
+const char *password = "goodlife";
+
+int number = 0;
+
+WiFiUDP udp;
+
+void setup() {
+  SerialPort.begin(15200, SERIAL_8N1, 16, 17);
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+
+  Serial.println("Connected to WiFi");
+}
+
+void loop() {
+  if (SerialPort.available()){
+    char buffer[255];
+    char receivedChar = SerialPort.read(); // Read the character received from serial port
+    int intValue = receivedChar - '0'; // Convert char to int
+    Serial.println(intValue);
+    buffer[0] = intValue;
+    sprintf(buffer, "%d", intValue);
+    udp.beginPacket(IPAddress(192, 168, 8, 159), 1234); // IP address and port of the receiver ESP32
+    udp.print(buffer);
+    Serial.print(buffer);
+    udp.endPacket();
+  }
+}
