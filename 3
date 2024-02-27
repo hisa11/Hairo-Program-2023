@@ -16,7 +16,7 @@ WebServer server(80);
 WiFiUDP udp;
 
 void setup() {
-  SerialPort.begin(15200, SERIAL_8N1, 16, 17);
+  SerialPort.begin(115200, SERIAL_8N1, 16, 17);
   Serial.begin(115200);
   WiFi.begin(ssid, password);
 
@@ -47,5 +47,13 @@ void loop() {
     Serial.printf(incomingPacket);
     SerialPort.print(incomingPacket);
     SerialPort.print("\n");
+  
+
+    if (SerialPort.available()) {
+      char number = SerialPort.read();
+      udp.beginPacket("192.168.8.159", 1234);
+      udp.write(number);
+      udp.endPacket();
+    }
   }
 }
