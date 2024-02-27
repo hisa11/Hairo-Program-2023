@@ -76,7 +76,7 @@ void loop() {
       print_and_udp("r", 1, Ry);
     }
 
-    delay(10);
+    delay(20);
   }
   int packetSize = udp.parsePacket();
   if (packetSize) {
