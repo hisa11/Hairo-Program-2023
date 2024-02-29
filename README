@@ -1,5 +1,4 @@
-![](https://kishida.gr.jp/wp-content/uploads/2021/11/202247_01.png)
+
 1, bluetoothでps4コントローラーから受信し、wifiで送信するプログラム(esp32)
 2, wi-fiで1から送信される値を受け取るプログラム(esp32)
 3, uartで2から送信される値を受け取るプログラム(stm32)
-![画像の説明](https://kishida.gr.jp/wp-content/uploads/2021/11/202247_01.png)
