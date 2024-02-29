@@ -98,17 +98,17 @@ void loop() {
 
     int Ly = PS4.LStickY();
     if (Ly < -80 && Ly > -130) {
-      print_and_udp("ZZZZZZZZZZ", 0, 0, souryou);
-    } else if (Ly < -40 && Ly > -80) {
-      print_and_udp("XXXXXXXXXX", 0, 0, souryou);
-    } else if (Ly < -12 && Ly > -40) {
-      print_and_udp("CCCCCCCCCC", 0, 0, souryou);
-    } else if (Ly < 40 && Ly > 12) {
-      print_and_udp("VVVVVVVVVV", 0, 0, souryou);
-    } else if (Ly < 80 && Ly > 40) {
-      print_and_udp("BBBBBBBBBB", 0, 0, souryou);
-    } else if (Ly < 130 && Ly > 80) {
       print_and_udp("NNNNNNNNNN", 0, 0, souryou);
+    } else if (Ly < -40 && Ly > -80) {
+      print_and_udp("BBBBBBBBBB", 0, 0, souryou);
+    } else if (Ly < -12 && Ly > -40) {
+      print_and_udp("VVVVVVVVVV", 0, 0, souryou);
+    } else if (Ly < 40 && Ly > 12) {
+      print_and_udp("CCCCCCCCCC", 0, 0, souryou);
+    } else if (Ly < 80 && Ly > 40) {
+      print_and_udp("XXXXXXXXXX", 0, 0, souryou);
+    } else if (Ly < 130 && Ly > 80) {
+      print_and_udp("ZZZZZZZZZZ", 0, 0, souryou);
     }
 
 
