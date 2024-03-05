@@ -44,7 +44,12 @@ void loop() {
     if (PS4.L1()) print_and_udp("y", 0, 0, souryou);
     if (PS4.R1()) print_and_udp("i", 0, 0, souryou);
     if (PS4.L3()) print_and_udp("r", 0, 0, souryou);
-    if (PS4.R3()) print_and_udp("l", 0, 0, souryou);
+    if (PS4.R3()) print_and_udp("l", 0, 0, souryou);    
+
+    if (PS4.Share()) print_and_udp("f", 0, 0, souryou);
+    if (PS4.Options()) print_and_udp("g", 0, 0, souryou);
+    if (PS4.PSButton()) print_and_udp("j", 0, 0, souryou);
+    if (PS4.Touchpad()) print_and_udp("h", 0, 0, souryou);
 
     if (PS4.R2()) {
       int R2 = PS4.R2Value();
